@@ -3,7 +3,7 @@ const { User, Thought } = require('../models');
 module.exports = {
   // Get all thoughts
   getThoughts(req, res) {
-    Thoughts.find()
+    Thought.find()
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
@@ -14,7 +14,7 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'No thought with that ID' })
-          : res.json(course)
+          : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
@@ -44,14 +44,14 @@ module.exports = {
   // Update a thought
   updateThought(req, res) {
     Thought.findOneAndUpdate(
-      { _id: req.params.thoughId },
+      { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'No thought with this id!' })
-          : res.json(course)
+          : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
@@ -86,7 +86,7 @@ module.exports = {
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $push: { reaction: req.body } },
+      { $push: { reactions: req.body } },
       { runValidators: true, new: true }
     )
       .then((thought) =>
@@ -102,7 +102,7 @@ module.exports = {
   removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reaction: { reactionId: req.params.reactionId } } },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
       .then((thought) =>
@@ -110,7 +110,7 @@ module.exports = {
           ? res
             .status(404)
             .json({ message: 'No thought found with that ID :(' })
-          : res.json(student)
+          : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
