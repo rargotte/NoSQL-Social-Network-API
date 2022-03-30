@@ -19,14 +19,17 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(routes);
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/18-NoSQL-Social-Network-API', {
-  useFindAndModify: false,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/18-NoSQL-Social-Network-API', {
+//   useFindAndModify: false,
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
   
   // Use this to log mongo queries being executed!
 mongoose.set('debug', true);
+db.once('open', () => {
+  app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
+})
 
-app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
+//app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
 
