@@ -39,6 +39,14 @@ No seed data is provided, so you’ll need to create your own data using Insomni
   # Licenses
   [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
   
+  Here there are 2 videos that show how the solution works:
+  1. With object User:
   
+https://user-images.githubusercontent.com/93161922/160890880-b1581e9c-cd39-40bd-9d2a-ea7a1ec92e93.mp4
+
+2. With object Thought:
+
+https://user-images.githubusercontent.com/93161922/160893862-237b8abf-a8db-447d-ab49-13b36004bdc0.mp4
+
 
 
