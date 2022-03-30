@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
   // Get all users
@@ -9,17 +9,22 @@ module.exports = {
   },
   // Get a user
   getSingleUser(req, res) {
+    console.log(req.params.userId);
     User.findOne({ _id: req.params.userId })
       .select('-__v')
-      .populate('thoughts')
-      .populate('friends')
+            .populate('thoughts')
+            .populate('friends')
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
-          : res.json(course)
+          : res.json(user)
       )
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err)
+      });
   },
+
   // Create a user
   createUser(req, res) {
     User.create(req.body)
@@ -50,7 +55,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with this id!' })
-          : res.json(course)
+          : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
@@ -79,7 +84,7 @@ module.exports = {
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { friends: { friendId: req.params.friendId } } },
+      { $pull: { friends: req.params.friendId  } },
       { runValidators: true, new: true }
     )
       .then((user) =>
